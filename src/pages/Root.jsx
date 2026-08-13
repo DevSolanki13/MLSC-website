@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import ScrollToTop from "../components/ScrollToTop";
 import bgvideo from "../assets/mlsc.mp4";
 import { FavoritesProvider } from "../context/FavoritesContext";
+import Toast from "../components/Toast";
+import ScrollToTopButton from "../components/ScrollToTopButton";
+import DynamicTitle from "../components/DynamicTitle";
 
 const Root = () => {
   const [loading, setLoading] = useState(true);
@@ -42,6 +45,7 @@ const Root = () => {
 
   return (
     <FavoritesProvider>
+      <DynamicTitle />
       {loading ? (
         <section>
           <div id="preloader">
@@ -57,6 +61,8 @@ const Root = () => {
           <ScrollToTop />
           <Navbar />
           <Outlet />
+          <ScrollToTopButton />
+          <Toast />
         </>
       )}
     </FavoritesProvider>
