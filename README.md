@@ -2,7 +2,8 @@
 
 [![Vercel Deployment](https://img.shields.io/badge/Vercel-Live_Demo-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://mlsc-website-kappa.vercel.app/)
 
-> **🌐 Live Demo**: [https://mlsc-website-kappa.vercel.app/](https://mlsc-website-kappa.vercel.app/)
+> **🌐 Live Web App**: [https://mlsc-website-kappa.vercel.app/](https://mlsc-website-kappa.vercel.app/)  
+> **📹 Live Demo Video**: [Watch Demo Video](DevSolanki13_MLSC-website_%20Official%20MLSC%20VCET%20Website%20build%20with%20React%20and%20Firebase.%20-%20Google%20Chrome%202026-08-14%2002-22-34.mp4)
 
 Welcome to the official documentation for the **Microsoft Learn Student Club (MLSC) VCET Website**! This repository powers the official club platform, showcasing flagship workshops, open-source student projects, club leadership, data insights, and interactive student utilities.
 
