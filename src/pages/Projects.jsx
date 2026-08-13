@@ -1,10 +1,20 @@
 import { useNavigate } from 'react-router-dom';
 import styles from './Projects.module.css';
 import projectData from "../utils/projectData.json";
+import { useFavorites } from "../hooks/useFavorites";
+import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 
-const renderTopTile = (project, navigate) => {
+const ProjectTile = ({ project, navigate, isFavorited, toggleFavorite }) => {
+  const saved = isFavorited(project.id, 'projects');
   
-  const handleClick = () => { navigate(`/projects/${project.id}`); };
+  const handleClick = () => {
+    navigate(`/projects/${project.id}`);
+  };
+
+  const handleBookmark = (e) => {
+    e.stopPropagation();
+    toggleFavorite(project.id, 'projects', project.name);
+  };
 
   return (
     <div
@@ -15,6 +25,17 @@ const renderTopTile = (project, navigate) => {
       tabIndex={0}
       style={{ cursor: 'pointer' }}
     >
+      <button
+        className={`${styles.project_bookmark_btn} ${saved ? styles.bookmarked : ''}`}
+        onClick={handleBookmark}
+        aria-label={saved ? `Remove ${project.name} from saved items` : `Save ${project.name}`}
+        aria-pressed={saved}
+        title={saved ? "Remove Bookmark" : "Save Project"}
+        type="button"
+      >
+        {saved ? <FaBookmark size={16} /> : <FaRegBookmark size={16} />}
+      </button>
+
       <img src={project.imgSrc} alt={project.name} className={styles.projectImg} />
       <p className={styles.projectName}>{project.name}</p>
       <p className={styles.projectCategory}>{project.category}</p>
@@ -24,6 +45,8 @@ const renderTopTile = (project, navigate) => {
 
 const Projects = () => {
   const navigate = useNavigate();
+  const { isFavorited, toggleFavorite } = useFavorites();
+
   const webDevProjects = projectData.webDev.slice(0, 4);
   const aiMlProjects = projectData.aiMl.slice(0, 3);
   const appProjects = projectData.app.slice(0, 2);
@@ -35,25 +58,49 @@ const Projects = () => {
       <div className={styles.projectCategorySection}>
         <p className={styles.categoryTitle}>Web Development Projects</p>
         <div className={styles.projectGrid}>
-          {webDevProjects.map((project) => renderTopTile(project, navigate))}
+          {webDevProjects.map((project) => (
+            <ProjectTile
+              key={project.id}
+              project={project}
+              navigate={navigate}
+              isFavorited={isFavorited}
+              toggleFavorite={toggleFavorite}
+            />
+          ))}
         </div>
       </div>
 
       <div className={styles.projectCategorySection}>
         <p className={styles.categoryTitle}>AI/ML Projects</p>
         <div className={styles.projectGrid}>
-          {aiMlProjects.map((project) => renderTopTile(project, navigate))}
+          {aiMlProjects.map((project) => (
+            <ProjectTile
+              key={project.id}
+              project={project}
+              navigate={navigate}
+              isFavorited={isFavorited}
+              toggleFavorite={toggleFavorite}
+            />
+          ))}
         </div>
       </div>
 
       <div className={styles.projectCategorySection}>
         <p className={styles.categoryTitle}>App Development Projects</p>
         <div className={styles.projectGrid}>
-          {appProjects.map((project) => renderTopTile(project, navigate))}
+          {appProjects.map((project) => (
+            <ProjectTile
+              key={project.id}
+              project={project}
+              navigate={navigate}
+              isFavorited={isFavorited}
+              toggleFavorite={toggleFavorite}
+            />
+          ))}
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Projects;
