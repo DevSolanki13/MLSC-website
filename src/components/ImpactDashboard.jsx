@@ -97,10 +97,19 @@ const ImpactDashboard = () => {
         {/* Visuals Split: Bar Chart + Event Timeline */}
         <div className={styles.visualsLayout}>
           {/* Animated Bar Chart Card */}
-          <div className={styles.visualCard} onClick={() => navigate('/projects')} style={{ cursor: 'pointer' }}>
-            <h3 className={styles.visualTitle}>
-              <FaChartBar /> Project Distribution Breakdown
-            </h3>
+          <div className={styles.visualCard}>
+            <div className={styles.visualHeader}>
+              <h3 className={styles.visualTitle}>
+                <FaChartBar /> Project Distribution Breakdown
+              </h3>
+              <button
+                className={styles.redirectBtn}
+                onClick={() => navigate('/projects')}
+                type="button"
+              >
+                View Projects →
+              </button>
+            </div>
             <div className={styles.chartContainer}>
               <div className={styles.barGroup}>
                 <div className={styles.barHeader}>
@@ -145,9 +154,18 @@ const ImpactDashboard = () => {
 
           {/* Event Impact Milestone Timeline Card */}
           <div className={styles.visualCard}>
-            <h3 className={styles.visualTitle}>
-              <FaCalendarCheck /> Key Milestone Workshops
-            </h3>
+            <div className={styles.visualHeader}>
+              <h3 className={styles.visualTitle}>
+                <FaCalendarCheck /> Key Milestone Workshops
+              </h3>
+              <button
+                className={styles.redirectBtn}
+                onClick={() => navigate('/events')}
+                type="button"
+              >
+                View All Events →
+              </button>
+            </div>
             <div className={styles.timeline}>
               {eventsData.slice(0, 4).map((event) => {
                 const partCount = event.info?.find((i) => i.label.includes('Participants'))?.value || 0;
