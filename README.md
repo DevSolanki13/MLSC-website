@@ -1,120 +1,109 @@
-# Offical Documentation for MLSC VCET Website
+# Official Documentation: MLSC VCET Website
 
-## Overview
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-Live_Demo-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://mlsc-website-kappa.vercel.app/)
 
-Welcome to the official documentation for the MLSC VCET Website, the dynamic and immersive website created by the Web Team! where you can Immerse yourself in seminars, hackathons, and interactive workshops where we showcase our projects, engage in vibrant discussions, and unleash our tech potential.
+> **🌐 Live Demo**: [https://mlsc-website-kappa.vercel.app/](https://mlsc-website-kappa.vercel.app/)
+
+Welcome to the official documentation for the **Microsoft Learn Student Club (MLSC) VCET Website**! This repository powers the official club platform, showcasing flagship workshops, open-source student projects, club leadership, data insights, and interactive student utilities.
+
+---
+
+## 🌟 Newly Integrated Features & Enhancements
+
+### 1. 📌 My MLSC Favorites System (`/favorites`)
+* **Custom Hook (`useFavorites`) & Context (`FavoritesContext`)**: A reactive state management wrapper around `localStorage` (`mlsc_favorites_v1`) with cross-tab browser synchronization (`storage` event listener).
+* **Bookmark & Heart Action Buttons**: Integrated accessible bookmark buttons on all Event Cards and Project Tiles (`aria-pressed`, `aria-label`, `tabIndex={0}`).
+* **Dedicated Favorites Dashboard**: Route `/favorites` displaying saved items in a responsive grid, equipped with category filter tabs (*All Items*, *Events*, *Projects*) and friendly empty-state CTAs (*"Browse Events"*, *"Explore Projects"*).
+* **Click Propagation Safeguards**: Project tiles utilize `e.stopPropagation()` on bookmark and share clicks to prevent accidental navigation to item detail pages.
+
+### 2. 🔗 One-Click Share System
+* **Native Web Share & Clipboard Fallback**: Share buttons on all Event Cards and Project Tiles. Uses `navigator.share()` on mobile devices or copies the direct URL to the clipboard with an instant confirmation toast alert (*"Copied link for 'ReactJS Workshop' to clipboard!"*).
+
+### 3. 📊 MLSC Impact Dashboard ("MLSC in Numbers")
+* **Data-Driven Aggregate Insights**: Mines real JSON data from `eventsData`, `projectData.json`, and `data.json` to tell a compelling story of community reach.
+* **Top 4 KPI Counter Cards**: Animated metric numbers for *Students Impacted* (880+), *Flagship Workshops* (6+), *Technical Projects Built* (10+), and *Core Team Leads* (28+) using `react-countup`.
+* **Animated Project Category Bar Chart**: Glowing progress bars visualizing project distribution across *Web Development*, *AI & Machine Learning*, and *Mobile Apps*.
+* **Interactive Event Milestone Timeline**: A vertical connected timeline of major club events. **Clicking any milestone card pops up the full Event Details Modal**!
+
+### 4. 🔮 High-End UX Polish & Accessibility
+* **Undo Toast Notifications**: Floating toast notification system with a 4-second **"Undo"** button when an item is un-bookmarked.
+* **Dynamic Route Titles**: Per-page document title updates (`Home | MLSC VCET`, `Events & Workshops | MLSC VCET`, `My MLSC | Saved Items`).
+* **Floating Scroll-To-Top**: Smooth floating action button appearing after 300px scroll depth.
+* **Shimmer Skeleton Loader**: Animated card skeleton loader replacing static spinners for seamless visual loading (`loading.jsx`).
+
+---
+
+## 🛠️ System Architecture & Data Flow
+
+```
+                           ┌─────────────────────────────┐
+                           │   FavoritesContext Provider │
+                           │   (localStorage Sync Engine)│
+                           └──────────────┬──────────────┘
+                                          │
+            ┌─────────────────────────────┼─────────────────────────────┐
+            ▼                             ▼                             ▼
+   ┌──────────────────┐          ┌──────────────────┐          ┌──────────────────┐
+   │  Event / Project │          │   Navbar Badge   │          │   My MLSC Page   │
+   │ Bookmark & Share │          │  Count Indicator │          │   (/favorites)   │
+   └────────┬─────────┘          └──────────────────┘          └────────┬─────────┘
+            │                                                           │
+            └───────────────────►  Toast Alert System  ◄────────────────┘
+                                  (with 4s Undo Option)
+```
+
+---
 
 ## 📦 Technologies Used
 
-- `Vite`
-- `React.js`
-- `Three.js`
-- `GSAP`
-- `Firebase`
-- `Netlify`
+- `Vite` & `React.js`
+- `React Router v6`
+- `Context API & Custom Hooks`
+- `GSAP` & `Vanta.js`
+- `React CountUp`
+- `React Icons`
+- `Firebase` & `Vercel`
 
-## Running the MLSC VCET Website Locally
+---
 
-To run the MLSC VCET Website locally, follow the guidelines below. Ensure that you have Node.js and npm installed on your machine.
+## 💻 Running the MLSC VCET Website Locally
 
 ### Prerequisites
-- **Node.js:** Make sure Node.js is installed. You can download it from [here](https://nodejs.org/).
+- **Node.js:** Make sure Node.js is installed. Download it from [here](https://nodejs.org/).
 
-## Steps
+### Steps
 1. **Clone the repository:**
-    ```bash
-    git clone https://github.com/Microsoft-Learn-Students-Club/MLSC-website.git
-    ```
+   ```bash
+   git clone https://github.com/Microsoft-Learn-Students-Club/MLSC-website.git
+   ```
 
 2. **Navigate to the project directory:**
-    ```bash
-    cd MLSC-website
-    ```
+   ```bash
+   cd MLSC-website
+   ```
 
 3. **Install Dependencies:**
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 
 4. **Run the application:**
-    ```bash
-    npm run dev
-    ```
-   This command will start the development server and open the app in your default web browser.
+   ```bash
+   npm run dev
+   ```
+   This command starts the development server at [http://localhost:5173](http://localhost:5173).
 
-5. **Access the App:**
-   Open your web browser and go to [http://localhost:5173](http://localhost:5173). You should see the MLSC VCET Website in React + Vite.js app running locally.
+5. **Build for Production:**
+   ```bash
+   npm run build
+   ```
 
-6. **Explore the App:**
-   You can now explore the different sections of the MLSC VCET Website, such as Home, Works, Team, Leaderboard and Contact Us.
+---
 
-7. **Stop the Development Server:**
-   To stop the development server, press `Ctrl + C` in the terminal where the server is running.
+## 👥 Maintainers
 
-## Additional Notes
-- If you encounter any issues with dependencies, ensure that Node.js and npm are properly installed, and try running `npm install` again.
-- Make sure the required npm packages are listed in the `package.json` file.
-- For deployment or production builds, you may need to refer to the specific deployment instructions or build scripts provided in the project.
+The MLSC VCET Website is actively maintained and developed by the club web team:
 
-## Contribution Guidelines
-
-We welcome contributions to enhance the MLSC VCET website. Your input is valuable, and following these guidelines ensures a smooth collaboration.
-
-### Getting Started
-
-1. **Fork & Clone:** Begin by forking the repository and cloning it to your local machine.
-    ```bash
-    git clone https://github.com/your-username/MLSC-website.git
-    cd MLSC-website
-    ```
-
-2. **Environment Setup:** Set up your development environment and install necessary dependencies.
-    ```bash
-    npm install
-    ```
-
-3. **Branching:** Create a new branch for your feature or bug fix.
-    ```bash
-    git checkout -b feature/your-feature-name
-    ```
-
-### Code Style
-
-- Follow consistent coding styles and conventions.
-- Ensure meaningful variable and function names.
-- Maintain proper indentation.
-
-### Commit Messages
-
-- Write clear and concise commit messages.
-- Use present tense and imperative mood (e.g., "Add feature" instead of "Added feature").
-
-### Reporting Issues
-
-- If you encounter any issues or bugs, please report them on the GitHub Issues page. Provide a detailed description, steps to reproduce, and relevant information.
-
-### Testing
-
-- Before submitting a pull request, ensure thorough testing of your changes. Verify that the existing functionality remains intact.
-
-### Pull Requests
-
-- **Create Pull Request:** Develop a pull request against the main branch of the original repository.
-- **Description:** Clearly describe the changes and the motivation behind them.
-- **Reference Issues:** If applicable, reference any related issues in your pull request.
-
-### Questions
-
-- If you have any questions, feel free to reach out to the maintainers or the community for assistance.
-
-Thank you for contributing! 🌟
-
-## Maintainers
-
-The MLSC VCET Website is actively maintained and developed by the following contributors:
-
-- Mukesh Billa -> GitHub: [bmukesh23](https://github.com/bmukesh23)
-- Adarsh Gupta -> GitHub: [Adarsh7825](https://github.com/Adarsh7825)
-
-Feel free to contact the maintainers for support, bug reports, or contributions to the project. We appreciate your interest and collaboration!
-
+- **Paarth Baradia** — MLSA - Club Lead
+- **Mukesh Billa** — GitHub: [bmukesh23](https://github.com/bmukesh23)
+- **Adarsh Gupta** — GitHub: [Adarsh7825](https://github.com/Adarsh7825)
