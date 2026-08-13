@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import CountUp from 'react-countup';
 import eventsData from '../utils/eventsData';
 import projectData from '../utils/projectData.json';
+import teamData from '../utils/data.json';
 import Modal from '../layouts/Modal';
 import styles from './ImpactDashboard.module.css';
 import { FaChartBar, FaCalendarCheck, FaUsers, FaLaptopCode, FaRocket } from 'react-icons/fa';
@@ -22,6 +23,13 @@ const ImpactDashboard = () => {
     setModalIsOpen(true);
   };
 
+  const handleCardKeyDown = (e, action) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      action();
+    }
+  };
+
   // Compute stats from real data
   const totalEvents = eventsData.length;
   
@@ -34,6 +42,15 @@ const ImpactDashboard = () => {
   const aiMlCount = projectData.aiMl.length;
   const appCount = projectData.app.length;
   const totalProjects = webCount + aiMlCount + appCount;
+
+  // Compute total team size dynamically from data.json
+  const totalTeamMembers =
+    (teamData.lead?.length || 0) +
+    (teamData.corporate?.length || 0) +
+    (teamData.App?.length || 0) +
+    (teamData.ML?.length || 0) +
+    (teamData.Dev?.length || 0) +
+    (teamData.Outreach?.length || 0);
 
   // Percentage calculations for Bar Chart
   const webPercent = Math.round((webCount / totalProjects) * 100);
@@ -53,7 +70,14 @@ const ImpactDashboard = () => {
 
         {/* Top 4 KPI Counter Cards */}
         <div className={styles.kpiGrid}>
-          <div className={styles.kpiCard} onClick={() => navigate('/events')} style={{ cursor: 'pointer' }}>
+          <div
+            className={styles.kpiCard}
+            onClick={() => navigate('/events')}
+            onKeyDown={(e) => handleCardKeyDown(e, () => navigate('/events'))}
+            role="button"
+            tabIndex={0}
+            style={{ cursor: 'pointer' }}
+          >
             <div className={styles.kpiNumber}>
               <CountUp start={0} end={totalParticipants} duration={2.5} suffix="+" />
             </div>
@@ -63,7 +87,14 @@ const ImpactDashboard = () => {
             </div>
           </div>
 
-          <div className={styles.kpiCard} onClick={() => navigate('/events')} style={{ cursor: 'pointer' }}>
+          <div
+            className={styles.kpiCard}
+            onClick={() => navigate('/events')}
+            onKeyDown={(e) => handleCardKeyDown(e, () => navigate('/events'))}
+            role="button"
+            tabIndex={0}
+            style={{ cursor: 'pointer' }}
+          >
             <div className={styles.kpiNumber}>
               <CountUp start={0} end={totalEvents} duration={2.5} suffix="+" />
             </div>
@@ -73,7 +104,14 @@ const ImpactDashboard = () => {
             </div>
           </div>
 
-          <div className={styles.kpiCard} onClick={() => navigate('/projects')} style={{ cursor: 'pointer' }}>
+          <div
+            className={styles.kpiCard}
+            onClick={() => navigate('/projects')}
+            onKeyDown={(e) => handleCardKeyDown(e, () => navigate('/projects'))}
+            role="button"
+            tabIndex={0}
+            style={{ cursor: 'pointer' }}
+          >
             <div className={styles.kpiNumber}>
               <CountUp start={0} end={totalProjects} duration={2.5} suffix="+" />
             </div>
@@ -83,9 +121,16 @@ const ImpactDashboard = () => {
             </div>
           </div>
 
-          <div className={styles.kpiCard} onClick={() => navigate('/team')} style={{ cursor: 'pointer' }}>
+          <div
+            className={styles.kpiCard}
+            onClick={() => navigate('/team')}
+            onKeyDown={(e) => handleCardKeyDown(e, () => navigate('/team'))}
+            role="button"
+            tabIndex={0}
+            style={{ cursor: 'pointer' }}
+          >
             <div className={styles.kpiNumber}>
-              <CountUp start={0} end={28} duration={2.5} suffix="+" />
+              <CountUp start={0} end={totalTeamMembers} duration={2.5} suffix="+" />
             </div>
             <div className={styles.kpiLabel}>
               <FaRocket style={{ display: 'inline', marginRight: '6px', color: '#60a5fa' }} />
@@ -176,6 +221,7 @@ const ImpactDashboard = () => {
                     className={styles.timelineItem}
                     key={event.id}
                     onClick={() => openEventModal(event)}
+                    onKeyDown={(e) => handleCardKeyDown(e, () => openEventModal(event))}
                     role="button"
                     tabIndex={0}
                     style={{ cursor: 'pointer' }}

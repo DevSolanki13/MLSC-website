@@ -21,11 +21,19 @@ const ProjectTile = ({ project, navigate, isFavorited, toggleFavorite, shareItem
     shareItem(project.name, `/projects/${project.id}`);
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleClick();
+    }
+  };
+
   return (
     <div
       className={`${styles.projectTile} ${styles.topdetails}`}
       key={project.id}
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
       role="button"
       tabIndex={0}
       style={{ cursor: 'pointer' }}

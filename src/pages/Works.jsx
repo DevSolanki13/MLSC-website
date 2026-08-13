@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import Events from "./Events";
 
 import Footer from "../layouts/Footer"

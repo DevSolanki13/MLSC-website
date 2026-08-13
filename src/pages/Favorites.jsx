@@ -7,7 +7,7 @@ import styles from './Favorites.module.css';
 import eventStyles from './Events.module.css';
 import projectStyles from './Projects.module.css';
 import Modal from '../layouts/Modal';
-import { FaBookmark, FaRegBookmark, FaBookmark as FaBookmarkIcon } from 'react-icons/fa';
+import { FaBookmark } from 'react-icons/fa';
 
 const Favorites = () => {
   const navigate = useNavigate();
@@ -34,6 +34,13 @@ const Favorites = () => {
   const toggleModal = (event) => {
     setSelectedEvent(event);
     setModalIsOpen(!isModalOpen);
+  };
+
+  const handleTileKeyDown = (e, projectId) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      navigate(`/projects/${projectId}`);
+    }
   };
 
   const showEvents = activeTab === 'all' || activeTab === 'events';
@@ -76,7 +83,7 @@ const Favorites = () => {
       {/* Empty State */}
       {favoritesCount === 0 || totalDisplayItems === 0 ? (
         <div className={styles.emptyState}>
-          <FaBookmarkIcon size={48} className={styles.emptyIcon} />
+          <FaBookmark size={48} className={styles.emptyIcon} />
           <h2 className={styles.emptyTitle}>No saved items yet</h2>
           <p className={styles.emptyText}>
             Bookmark upcoming workshops or impressive student projects to easily access them here anytime!
@@ -152,6 +159,7 @@ const Favorites = () => {
                       className={`${projectStyles.projectTile} ${projectStyles.topdetails}`}
                       key={project.id}
                       onClick={() => navigate(`/projects/${project.id}`)}
+                      onKeyDown={(e) => handleTileKeyDown(e, project.id)}
                       role="button"
                       tabIndex={0}
                       style={{ cursor: 'pointer' }}
