@@ -102,6 +102,30 @@ export const FavoritesProvider = ({ children }) => {
     []
   );
 
+  const shareItem = useCallback((title, path = '') => {
+    const shareUrl = window.location.origin + (path || window.location.pathname);
+    if (navigator.share) {
+      navigator
+        .share({
+          title: title,
+          text: `Check out ${title} on MLSC VCET!`,
+          url: shareUrl,
+        })
+        .catch(() => {});
+    } else {
+      navigator.clipboard
+        .writeText(shareUrl)
+        .then(() => {
+          setToast({
+            message: `Copied link for "${title}" to clipboard!`,
+            type: 'add',
+            itemInfo: null,
+          });
+        })
+        .catch(() => {});
+    }
+  }, []);
+
   const undoLastAction = useCallback(() => {
     if (previousFavorites) {
       setFavorites(previousFavorites);
@@ -129,6 +153,7 @@ export const FavoritesProvider = ({ children }) => {
     undoLastAction,
     clearToast,
     canUndo: !!previousFavorites,
+    shareItem,
   };
 
   return (

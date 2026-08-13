@@ -2,7 +2,7 @@ import { useState } from "react";
 import Modal from "../layouts/Modal";
 import styles from './Events.module.css';
 import { useFavorites } from "../hooks/useFavorites";
-import { FaBookmark, FaRegBookmark } from "react-icons/fa";
+import { FaBookmark, FaRegBookmark, FaShareAlt } from "react-icons/fa";
 import eventsData from "../utils/eventsData";
 
 const getEventId = (event) => {
@@ -13,7 +13,7 @@ const getEventId = (event) => {
 const Events = ({count}) => {
   const [isModalOpen, setModalIsOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const { isFavorited, toggleFavorite } = useFavorites();
+  const { isFavorited, toggleFavorite, shareItem } = useFavorites();
 
   const toggleModal = (event) => {
     setSelectedEvent(event);
@@ -49,6 +49,15 @@ const Events = ({count}) => {
                     >
                       {saved ? <FaBookmark size={18} /> : <FaRegBookmark size={18} />}
                       <span>{saved ? "Saved" : "Save"}</span>
+                    </button>
+                    <button
+                      onClick={() => shareItem(event.title, '/events')}
+                      type="button"
+                      className={styles.share_btn}
+                      aria-label={`Share ${event.title}`}
+                      title="Share Event"
+                    >
+                      <FaShareAlt size={16} />
                     </button>
                   </div>
                 </div>

@@ -2,9 +2,9 @@ import { useNavigate } from 'react-router-dom';
 import styles from './Projects.module.css';
 import projectData from "../utils/projectData.json";
 import { useFavorites } from "../hooks/useFavorites";
-import { FaBookmark, FaRegBookmark } from "react-icons/fa";
+import { FaBookmark, FaRegBookmark, FaShareAlt } from "react-icons/fa";
 
-const ProjectTile = ({ project, navigate, isFavorited, toggleFavorite }) => {
+const ProjectTile = ({ project, navigate, isFavorited, toggleFavorite, shareItem }) => {
   const saved = isFavorited(project.id, 'projects');
   
   const handleClick = () => {
@@ -16,6 +16,11 @@ const ProjectTile = ({ project, navigate, isFavorited, toggleFavorite }) => {
     toggleFavorite(project.id, 'projects', project.name);
   };
 
+  const handleShare = (e) => {
+    e.stopPropagation();
+    shareItem(project.name, `/projects/${project.id}`);
+  };
+
   return (
     <div
       className={`${styles.projectTile} ${styles.topdetails}`}
@@ -25,16 +30,28 @@ const ProjectTile = ({ project, navigate, isFavorited, toggleFavorite }) => {
       tabIndex={0}
       style={{ cursor: 'pointer' }}
     >
-      <button
-        className={`${styles.project_bookmark_btn} ${saved ? styles.bookmarked : ''}`}
-        onClick={handleBookmark}
-        aria-label={saved ? `Remove ${project.name} from saved items` : `Save ${project.name}`}
-        aria-pressed={saved}
-        title={saved ? "Remove Bookmark" : "Save Project"}
-        type="button"
-      >
-        {saved ? <FaBookmark size={16} /> : <FaRegBookmark size={16} />}
-      </button>
+      <div className={styles.project_actions}>
+        <button
+          className={`${styles.project_bookmark_btn} ${saved ? styles.bookmarked : ''}`}
+          onClick={handleBookmark}
+          aria-label={saved ? `Remove ${project.name} from saved items` : `Save ${project.name}`}
+          aria-pressed={saved}
+          title={saved ? "Remove Bookmark" : "Save Project"}
+          type="button"
+        >
+          {saved ? <FaBookmark size={15} /> : <FaRegBookmark size={15} />}
+        </button>
+
+        <button
+          className={styles.project_share_btn}
+          onClick={handleShare}
+          aria-label={`Share ${project.name}`}
+          title="Share Project"
+          type="button"
+        >
+          <FaShareAlt size={14} />
+        </button>
+      </div>
 
       <img src={project.imgSrc} alt={project.name} className={styles.projectImg} />
       <p className={styles.projectName}>{project.name}</p>
@@ -45,7 +62,7 @@ const ProjectTile = ({ project, navigate, isFavorited, toggleFavorite }) => {
 
 const Projects = () => {
   const navigate = useNavigate();
-  const { isFavorited, toggleFavorite } = useFavorites();
+  const { isFavorited, toggleFavorite, shareItem } = useFavorites();
 
   const webDevProjects = projectData.webDev.slice(0, 4);
   const aiMlProjects = projectData.aiMl.slice(0, 3);
@@ -65,6 +82,7 @@ const Projects = () => {
               navigate={navigate}
               isFavorited={isFavorited}
               toggleFavorite={toggleFavorite}
+              shareItem={shareItem}
             />
           ))}
         </div>
@@ -80,6 +98,7 @@ const Projects = () => {
               navigate={navigate}
               isFavorited={isFavorited}
               toggleFavorite={toggleFavorite}
+              shareItem={shareItem}
             />
           ))}
         </div>
@@ -95,6 +114,7 @@ const Projects = () => {
               navigate={navigate}
               isFavorited={isFavorited}
               toggleFavorite={toggleFavorite}
+              shareItem={shareItem}
             />
           ))}
         </div>
