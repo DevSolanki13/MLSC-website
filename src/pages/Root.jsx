@@ -3,6 +3,7 @@ import Navbar from "../layouts/Navbar";
 import { useEffect, useState } from "react";
 import ScrollToTop from "../components/ScrollToTop";
 import bgvideo from "../assets/mlsc.mp4";
+import { FavoritesProvider } from "../context/FavoritesContext";
 
 const Root = () => {
   const [loading, setLoading] = useState(true);
@@ -40,7 +41,7 @@ const Root = () => {
   }, []);
 
   return (
-    <>
+    <FavoritesProvider>
       {loading ? (
         <section>
           <div id="preloader">
@@ -58,7 +59,7 @@ const Root = () => {
           <Outlet />
         </>
       )}
-    </>
+    </FavoritesProvider>
   );
 };
 
