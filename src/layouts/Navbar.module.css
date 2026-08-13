@@ -45,6 +45,23 @@
     position: relative;
 }
 
+.favoritesLink {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.badgeCount {
+    background-color: #2563eb;
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    border-radius: 999px;
+    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.6);
+    line-height: 1;
+}
+
 .nav_link a:hover {
     color: rgb(2, 162, 255);
     transition: all 1s ease;
